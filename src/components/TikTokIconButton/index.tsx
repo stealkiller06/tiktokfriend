@@ -16,12 +16,16 @@ interface TikTokIconButtonProps {
   color?: OpaqueColorValue | string;
   size?: number;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void
 }
 
 export default function TikTokIconButton(props: TikTokIconButtonProps) {
-  const { children, name, style, size = 24, color = TikTokGrey } = props;
+  const { children, name, style, size = 24, color = TikTokGrey, onPress
+  } = props;
   return (
-    <TouchableOpacity style={style}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={style}>
       {name ? <FontAwesome name={name} size={size} color={color} /> : children}
     </TouchableOpacity>
   );
