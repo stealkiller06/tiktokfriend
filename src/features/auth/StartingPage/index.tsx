@@ -22,7 +22,9 @@ export default function StartingPage({
         >
           Registrarte
         </TikTokButton>
-        <TikTokButton style={styles.buttonMargin} mode="outlined">
+        <TikTokButton
+          onPress={() => navigation.navigate('Login')}
+          style={styles.buttonMargin} mode="outlined">
           Iniciar Sesión
         </TikTokButton>
       </View>

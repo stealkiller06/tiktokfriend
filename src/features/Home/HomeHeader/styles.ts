@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native'
-import { TikTokGrey, TikTokPrimary, TikTokWhite } from '../../../_core/colors'
+import { TikTokGrey, TikTokPrimary, TikTokRed, TikTokWhite } from '../../../_core/colors'
 
 export default StyleSheet.create({
     homeHeaderConctainer:{
@@ -33,5 +33,15 @@ export default StyleSheet.create({
     profileImage:{
         width:50,
         height:50
+    },
+    missingDetails:{
+        borderWidth:2,
+        borderColor:TikTokRed,
+        borderRadius:30
+    },
+    missingIcon:{
+        position:'absolute',
+        top:-3,
+        right:-4
     }
 })

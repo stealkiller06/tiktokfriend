@@ -1,14 +1,17 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import TikTokAvatar from "../../../../components/TikTokAvatar";
 import TikTokIconButton from "../../../../components/TikTokIconButton";
 import TikTokText from "../../../../components/TiktokText";
 import { TikTokWhite } from "../../../../_core/colors";
 import styles from "./styles";
 
-interface UserInfoProps {}
+
+interface UserInfoProps { }
 
 export default function UserInfo(props: UserInfoProps) {
+
+
   return (
     <View style={{ flex: 1 }}>
       <Image

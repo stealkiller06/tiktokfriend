@@ -8,5 +8,10 @@ export default StyleSheet.create({
         width:50,
         height:50,
         borderRadius:50
+    },
+    profileImageLarge:{
+        width:80,
+        height:80,
+        borderRadius:50
     }
 })

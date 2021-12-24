@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
+import { login } from '../../api/auth/authAPI'
+import { User } from '../../api/auth/types/auth'
+import * as SecureStore from 'expo-secure-store';
 
 // Define a type for the slice state
 interface AuthState {
-  value: number
+  user:User|null,
+  userToken:string|null,
+  loading:boolean
 }
 
 // Define the initial state using that type
 const initialState: AuthState = {
-  value: 0,
+  user:null,
+  userToken:null,
+  loading:true
 }
 
 export const authSlice = createSlice({
@@ -16,22 +22,39 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    loginUser(state,action:PayloadAction<{user:User|null,userToken:string|null}>){
+      state.user = action.payload.user;
+      state.userToken = action.payload.userToken
     },
-    decrement: (state) => {
-      state.value -= 1
+    setUser(state,action:PayloadAction<User>){
+      state.user = action.payload
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
-    },
+    setLoading(state,action:PayloadAction<boolean>){
+      state.loading = action.payload
+    }
   },
 })
 
-export const { increment, decrement, incrementByAmount } = authSlice.actions
+export const {loginUser,setLoading,setUser} = authSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.auth.value
+
 
 export default authSlice.reducer
+
+// Define a thunk that dispatches those action creators
+export const sendLoginRequest = (email:string,password:string) => async (dispatch:any) => {
+  try{
+    dispatch(setLoading(true))
+  const loginData = await login(email,password);
+  await SecureStore.setItemAsync("userToken", loginData.userToken);
+  dispatch(loginUser(loginData))
+  
+    
+  }catch(err){
+    console.log(err)
+
+  }finally{
+    dispatch(setLoading(false))
+  }
+  
+}
