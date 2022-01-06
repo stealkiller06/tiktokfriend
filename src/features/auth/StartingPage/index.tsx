@@ -17,7 +17,7 @@ export default function StartingPage({
       <TikTokText style={styles.logoTextStyle}>TikTok Amigo</TikTokText>
       <View style={styles.buttonContainer}>
         <TikTokButton
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("SignUp")}
           style={styles.buttonMargin}
         >
           Registrarte

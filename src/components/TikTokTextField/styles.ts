@@ -10,7 +10,7 @@ export default StyleSheet.create({
         height: 50,
         padding: 10,
         backgroundColor:TikTokGreyF5F5,
-        borderRadius:5
+        borderRadius:5,
       },
       errorInput:{
         borderColor:TikTokRed,

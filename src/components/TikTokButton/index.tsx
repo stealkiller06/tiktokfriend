@@ -5,7 +5,10 @@ import {
   StyleProp,
   ViewStyle,
   TouchableOpacity,
+  TextStyle,
+  ActivityIndicator,
 } from "react-native";
+import { TikTokWhite } from "../../_core/colors";
 import TikTokText from "../TiktokText";
 import styles from "./styles";
 
@@ -15,29 +18,37 @@ interface TikTokButtonProps {
   children: string;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
+  loading?: boolean;
+  textStyle?: StyleProp<TextStyle>
 }
 
 export default function TikTokButton(props: TikTokButtonProps) {
-  const { children, style, onPress, mode = "contained" } = props;
+  const { children, style, onPress, mode = "contained", textStyle, loading } = props;
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={!loading ? onPress : () => { }}
       style={[
         styles.buttonStyle,
         mode === "contained" ? styles.buttonContained : styles.buttonOutlined,
         style,
       ]}
     >
-      <TikTokText
-        style={[
-          styles.buttonTextStyle,
-          mode === "contained"
-            ? styles.buttonTextContained
-            : styles.buttonTextOutlined,
-        ]}
-      >
-        {children}
-      </TikTokText>
+      {loading ?
+        <ActivityIndicator size="small" color={TikTokWhite} />
+        :
+        <TikTokText
+          style={[
+            styles.buttonTextStyle,
+            mode === "contained"
+              ? styles.buttonTextContained
+              : styles.buttonTextOutlined,
+            textStyle
+          ]}
+        >
+          {children}
+        </TikTokText>
+      }
+
     </TouchableOpacity>
   );
 }

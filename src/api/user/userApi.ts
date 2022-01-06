@@ -14,3 +14,37 @@ export async function updateProfile(image:FormData,token:string){
 
     return data;
 }
+
+
+export async function getUsersByLocation(latitude:number,longitude:number, gender:string="",token:string){
+
+    const {data} = await axiosInstance.get<User[]>("/users/by-location",
+    {
+        headers:{
+            Authorization:`Bearer ${token}`,
+            "Content-Type":'multipart/form-data'
+        },
+        params:{
+            latitude,
+            longitude,
+            gender
+        }
+    }
+    )
+
+    return data;
+}
+
+export async function likeUser(userId:string, type:string,token:string){
+
+    const {data} = await axiosInstance.get<User[]>(`/like/${userId}/${type}`,
+    {
+        headers:{
+            Authorization:`Bearer ${token}`,
+            "Content-Type":'multipart/form-data'
+        }
+    }
+    )
+
+    return data;
+}

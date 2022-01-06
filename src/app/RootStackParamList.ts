@@ -3,5 +3,7 @@ type RootStackParamList = {
     Login:undefined;
     Home:undefined;
     Notifications:undefined,
-    Profile:undefined
+    Profile:undefined,
+    Setting:undefined,
+    SignUp:undefined
   };

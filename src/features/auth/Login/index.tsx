@@ -21,8 +21,6 @@ export default function Login(props: LoginProps) {
     async function login(values: loginFormValues) {
 
         dispatch(sendLoginRequest(values.email, values.password)).then(res => {
-            console.log(res)
-            console.log("This is the answer")
         })
 
     }

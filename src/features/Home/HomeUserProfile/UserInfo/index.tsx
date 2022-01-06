@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Image } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import TikTokAvatar from "../../../../components/TikTokAvatar";
 import TikTokIconButton from "../../../../components/TikTokIconButton";
 import TikTokText from "../../../../components/TiktokText";
 import { TikTokWhite } from "../../../../_core/colors";
+import { sendGetProfileListRequest } from "../../matchUserSlice";
 import styles from "./styles";
 
 
@@ -11,13 +13,25 @@ interface UserInfoProps { }
 
 export default function UserInfo(props: UserInfoProps) {
 
+  const dispatch = useAppDispatch();
+  const { profileList, location } = useAppSelector(state => state.matchUser)
+
+
+  useEffect(() => {
+    if (location) {
+      dispatch(sendGetProfileListRequest(location.latitude, location.longitude))
+    }
+  }, [location])
+  if (!profileList.length) return <View><TikTokText>There is not more tiktokers</TikTokText></View>
+  const currentProfile = profileList[0];
+
 
   return (
     <View style={{ flex: 1 }}>
       <Image
         style={styles.userInfoImage}
         source={{
-          uri: "https://www.harleytherapy.co.uk/counselling/wp-content/uploads/16297800391_5c6e812832.jpg",
+          uri: currentProfile?.images[0]?.location || "",
         }}
       />
       <View style={styles.imageOverlay} />
@@ -26,10 +40,10 @@ export default function UserInfo(props: UserInfoProps) {
         <View style={styles.imageHeaderProfilePicture}>
           <TikTokAvatar
             source={{
-              uri: "https://www.harleytherapy.co.uk/counselling/wp-content/uploads/16297800391_5c6e812832.jpg",
+              uri: currentProfile?.images[0]?.location || "",
             }}
           />
-          <TikTokText style={styles.imageHeaderText}>Victoria Rufo</TikTokText>
+          <TikTokText style={styles.imageHeaderText}>{currentProfile.firstname} {currentProfile.lastname}</TikTokText>
         </View>
 
         <TikTokIconButton name="flag" color={TikTokWhite} />

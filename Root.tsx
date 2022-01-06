@@ -14,6 +14,8 @@ import TikTokSafeAreaView from "./src/components/TikTokSafeAreaView";
 import { getCurrentUser } from "./src/api/auth/authAPI";
 import { loginUser, setLoading } from "./src/features/auth/authSlice";
 import Profile from "./src/features/Profile";
+import Settings from "./src/features/Settings";
+import SignUp from "./src/features/auth/SignUp";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -29,10 +31,10 @@ function Root() {
       let userRestored;
 
       try {
-        if(userRestored) return
+        if (userRestored) return
         userToken = await SecureStore.getItemAsync('userToken');
-        userRestored = await getCurrentUser(userToken||"");
-        dispatch(loginUser({user:userRestored||null, userToken:userToken||null}));
+        userRestored = await getCurrentUser(userToken || "");
+        dispatch(loginUser({ user: userRestored || null, userToken: userToken || null }));
 
       } catch (e) {
         // Restoring token failed
@@ -75,6 +77,13 @@ function Root() {
               }}
               component={Login}
             />
+            <Stack.Screen
+              name="SignUp"
+              options={{
+                headerShown: false,
+              }}
+              component={SignUp}
+            />
           </>
         ) :
           (
@@ -104,11 +113,16 @@ function Root() {
               <Stack.Screen
                 name="Profile"
                 options={{
-                  // headerShown: false,
                   title: "Profile",
-             
                 }}
                 component={Profile}
+              />
+              <Stack.Screen
+                name="Setting"
+                options={{
+                  title: "Configuraciones",
+                }}
+                component={Settings}
               />
             </>
           )
