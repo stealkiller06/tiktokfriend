@@ -5,5 +5,6 @@ type RootStackParamList = {
     Notifications:undefined,
     Profile:undefined,
     Setting:undefined,
-    SignUp:undefined
+    SignUp:undefined,
+    Reward:undefined
   };

@@ -9,7 +9,8 @@ export interface User {
     bio?: string,
     location?: Location,
     gender: string,
-    birthdate: string
+    birthdate: string,
+    tiktokAccount:string
 
 }
 

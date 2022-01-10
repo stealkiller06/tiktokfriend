@@ -1,5 +1,5 @@
 import axiosInstance from "../axios";
-import { Like } from "./types/like";
+import { Like, Match } from "./types/like";
 
 
 export async function likeUser(userId: string, type: string, token: string) {
@@ -8,6 +8,20 @@ export async function likeUser(userId: string, type: string, token: string) {
         likeTo: userId,
         type
     },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }
+    )
+
+    return data;
+}
+
+
+export async function getMatches( token: string) {
+
+    const { data } = await axiosInstance.get<Match[]>(`/match`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,

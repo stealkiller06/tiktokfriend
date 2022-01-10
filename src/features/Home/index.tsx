@@ -12,10 +12,12 @@ import TikTokText from "../../components/TiktokText";
 import TikTokButton from "../../components/TikTokButton";
 import { io } from 'socket.io-client';
 import { API } from "../../../config";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 interface HomeProps { }
 
-export default function Home(props: HomeProps) {
+export default function Home({ navigation }: NativeStackScreenProps<RootStackParamList>) {
   const { loadingLocation, profileList, location } = useAppSelector(state => state.matchUser)
+  const user = useAppSelector(state => state.auth.user)
   const [isFirstLoad, setIsFirstLoad] = useState(true)
   const userToken = useAppSelector(state => state.auth.userToken)
   const dispatch = useAppDispatch();
@@ -39,25 +41,26 @@ export default function Home(props: HomeProps) {
 
 
   useEffect(() => {
-    const socket = io(API);
-    console.log(socket.connected)
-    console.log(API)
-    console.log("testing")
-    socket.emit("events", "Test")
-    socket.emit("events", 10)
-
+    const socket = io(API, {});
     socket.on('connect', function () {
       console.log('Connected');
-      console.log("we are connected")
-
-      socket.emit('events', { test: 'test' });
-      socket.emit('identity', 0, response =>
-        console.log('Identity:', response),
-      );
+      socket.emit("joinMyRoom", user?._id);
     });
+
+    socket.on("matched", msg => {
+      Alert.alert("Nuevo Match", "Tienes un nuevo match",
+        [
+          { text: "Ok", onPress: () => navigation.navigate("Notifications") }
+        ]
+      )
+    })
+
+
+
 
     socket.on("error", function (err) {
       console.log(err)
+      console.log("this is the error")
     })
     socket.on('events', function (data) {
       console.log('event', data);
@@ -76,9 +79,11 @@ export default function Home(props: HomeProps) {
       socket.off('error')
       socket.off('disconnect')
       socket.off('connect_failed')
+      socket.off("matched")
+      socket.off("test")
     }
 
-  }, [])
+  }, [user])
 
 
   function searchForMore() {

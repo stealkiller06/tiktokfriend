@@ -16,6 +16,7 @@ import { loginUser, setLoading } from "./src/features/auth/authSlice";
 import Profile from "./src/features/Profile";
 import Settings from "./src/features/Settings";
 import SignUp from "./src/features/auth/SignUp";
+import Reward from "./src/features/Reward";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -116,6 +117,13 @@ function Root() {
                   title: "Profile",
                 }}
                 component={Profile}
+              />
+              <Stack.Screen
+                name="Reward"
+                options={{
+                  title: "Reward",
+                }}
+                component={Reward}
               />
               <Stack.Screen
                 name="Setting"

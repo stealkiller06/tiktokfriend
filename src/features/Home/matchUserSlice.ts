@@ -3,7 +3,9 @@ import { login } from '../../api/auth/authAPI'
 import { User } from '../../api/auth/types/auth'
 import * as SecureStore from 'expo-secure-store';
 import { getUsersByLocation } from '../../api/user/userApi';
-import { likeUser } from '../../api/match/matchAPI';
+import { getMatches, likeUser } from '../../api/match/matchAPI';
+import { Match } from '../../api/match/types/like';
+import { getPointsTotal } from '../../api/point/pointAPI';
 
 // Define a type for the slice state
 interface AuthState {
@@ -13,7 +15,9 @@ interface AuthState {
     latitude: number,
     longitude: number
   } | null,
-  loadingLocation: boolean
+  loadingLocation: boolean,
+  matches:Match[],
+  totalPoints:number
 
 }
 
@@ -22,8 +26,9 @@ const initialState: AuthState = {
   profileList: [],
   loading: false,
   location: null,
-  loadingLocation: true
-
+  loadingLocation: true,
+  matches:[],
+  totalPoints:0
 }
 
 export const matchUserSlice = createSlice({
@@ -45,12 +50,32 @@ export const matchUserSlice = createSlice({
     },
     removeFirstUserFromProfileList(state) {
       state.profileList.shift()
+    },
+    setMatches(state,action:PayloadAction<Match[]>){
+      state.matches = action.payload
+    },
+    setTotalPoints(state,action:PayloadAction<number>){
+      state.totalPoints = action.payload
+    },
+    setPoints(state,action:PayloadAction<{value:number,type:string}>){
+
+      if(action.payload.type == "add"){
+        state.totalPoints += action.payload.value
+      }else{
+        state.totalPoints -= action.payload.value
+      }
+      
     }
 
   },
 })
 
-export const { setProfileList, setLoading, setLocation, setLoadingLocation, removeFirstUserFromProfileList } = matchUserSlice.actions
+export const { setProfileList,setMatches, setLoading, 
+  setLocation, setLoadingLocation, 
+  removeFirstUserFromProfileList,
+setTotalPoints,
+setPoints
+} = matchUserSlice.actions
 
 
 
@@ -73,6 +98,22 @@ export const sendGetProfileListRequest = (latitude: number, longitude: number, g
 
 }
 
+export const sendGetMatchListRequest = () => async (dispatch: any) => {
+  try {
+    dispatch(setLoading(true))
+    const userToken = await SecureStore.getItemAsync('userToken');
+    const matches = await getMatches( userToken || "");
+
+    dispatch(setMatches(matches))
+  } catch (err) {
+    console.log(err)
+
+  } finally {
+    dispatch(setLoading(false))
+  }
+
+}
+
 
 export const sendLikeRequest = (userId: string, type: string) => async (dispatch: any) => {
   try {
@@ -80,7 +121,28 @@ export const sendLikeRequest = (userId: string, type: string) => async (dispatch
     const userToken = await SecureStore.getItemAsync('userToken');
     const userLiked = await likeUser(userId, type, userToken || "")
 
+    if(type === "like"){
+      dispatch(setPoints({value:10, type:'remove'}))
+    }
     dispatch(removeFirstUserFromProfileList())
+  } catch (err) {
+    console.log(err)
+
+  } finally {
+    dispatch(setLoading(false))
+  }
+
+}
+export const sendGetPointsRequest = () => async (dispatch: any) => {
+  try {
+    dispatch(setLoading(true))
+    const userToken = await SecureStore.getItemAsync('userToken');
+    const pointsTotal = await getPointsTotal( userToken || "")
+
+    if(pointsTotal && pointsTotal.total != undefined){
+      dispatch(setTotalPoints(pointsTotal.total))
+    }
+
   } catch (err) {
     console.log(err)
 
