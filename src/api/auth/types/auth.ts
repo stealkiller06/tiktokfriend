@@ -10,13 +10,19 @@ export interface User {
     location?: Location,
     gender: string,
     birthdate: string,
-    tiktokAccount:string
+    tiktokAccount:string,
+    reward:Reward
 
 }
 
 export interface Location {
     type: string;
     coordinates: [longitude: number, latitude: number]
+}
+
+export interface Reward {
+    claimDate: string;
+    claim: boolean;
 }
 export interface Image {
     contentType: string;

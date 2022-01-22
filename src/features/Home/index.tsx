@@ -44,10 +44,12 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
     const socket = io(API, {});
     socket.on('connect', function () {
       console.log('Connected');
+      console.log(user?._id)
       socket.emit("joinMyRoom", user?._id);
     });
 
     socket.on("matched", msg => {
+      console.log("nuevo match")
       Alert.alert("Nuevo Match", "Tienes un nuevo match",
         [
           { text: "Ok", onPress: () => navigation.navigate("Notifications") }

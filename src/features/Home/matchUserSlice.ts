@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { login } from '../../api/auth/authAPI'
 import { User } from '../../api/auth/types/auth'
 import * as SecureStore from 'expo-secure-store';
-import { getUsersByLocation } from '../../api/user/userApi';
+import { claimLoginReward, getUsersByLocation } from '../../api/user/userApi';
 import { getMatches, likeUser } from '../../api/match/matchAPI';
 import { Match } from '../../api/match/types/like';
 import { getPointsTotal } from '../../api/point/pointAPI';
@@ -144,6 +144,29 @@ export const sendGetPointsRequest = () => async (dispatch: any) => {
     }
 
   } catch (err) {
+    console.log(err)
+
+  } finally {
+    dispatch(setLoading(false))
+  }
+
+}
+
+
+export const sendClaimLoginRewardRequest = (callback?:(user:User|null, err?:any)=>void) => async (dispatch: any) => {
+  try {
+    dispatch(setLoading(true))
+    const userToken = await SecureStore.getItemAsync('userToken');
+    const rewardResponse = await claimLoginReward( userToken || "")
+
+    if(rewardResponse && callback){
+      callback(rewardResponse)
+    }
+
+  } catch (err) {
+    if(callback){
+      callback(null, err)
+    }
     console.log(err)
 
   } finally {

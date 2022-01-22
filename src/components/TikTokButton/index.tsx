@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   View,
   Text,
@@ -15,7 +15,7 @@ import styles from "./styles";
 type ButtonMode = "outlined" | "contained";
 interface TikTokButtonProps {
   mode?: ButtonMode;
-  children: string;
+  children: ReactNode;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
   loading?: boolean;

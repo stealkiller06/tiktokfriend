@@ -198,7 +198,6 @@ export default function SignUp({ navigation }: NativeStackScreenProps<RootStackP
                                         value={values.password}
                                         onChangeText={handleChange('password')}
                                         placeholder="Contraseña"
-                                        keyboardType="visible-password"
                                         secureTextEntry={true}
                                         containerStyle={styles.inputStyle}
                                         placeholderTextColor={TikTokGrey} />
@@ -209,7 +208,6 @@ export default function SignUp({ navigation }: NativeStackScreenProps<RootStackP
                                         value={values.repeatPassword}
                                         onChangeText={handleChange('repeatPassword')}
                                         placeholder="Repetir Contraseña"
-                                        keyboardType="visible-password"
                                         secureTextEntry={true}
                                         placeholderTextColor={TikTokGrey} />
 

@@ -46,19 +46,22 @@ export const {loginUser,setLoading,setUser,logoutUser} = authSlice.actions
 export default authSlice.reducer
 
 // Define a thunk that dispatches those action creators
-export const sendLoginRequest = (email:string,password:string) => async (dispatch:any) => {
+export const  sendLoginRequest =  (email:string,password:string, callback?:(error?:any)=>void) => async (dispatch:any) => {
   try{
-    dispatch(setLoading(true))
+    // dispatch(setLoading(true))
   const loginData = await login(email,password);
   await SecureStore.setItemAsync("userToken", loginData.userToken);
   dispatch(loginUser(loginData))
-  
-    
+  if(callback){
+    callback()
+  }
   }catch(err){
-    console.log(err)
+    if(callback){
+      callback(err)
+    }
 
   }finally{
-    dispatch(setLoading(false))
+    // dispatch(setLoading(false))
   }
   
 }

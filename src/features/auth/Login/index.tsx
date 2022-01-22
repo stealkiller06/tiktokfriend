@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { View, TouchableOpacity, Alert } from 'react-native'
 import TikTokButton from '../../../components/TikTokButton'
 import TikTokText from '../../../components/TiktokText'
 import TikTokTextField from '../../../components/TikTokTextField'
@@ -17,11 +17,20 @@ interface LoginProps { }
 export default function Login(props: LoginProps) {
     const initialValues: loginFormValues = { email: '', password: '' };
     const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false)
 
     async function login(values: loginFormValues) {
-
-        dispatch(sendLoginRequest(values.email, values.password)).then(res => {
-        })
+        setLoading(true)
+        dispatch(sendLoginRequest(values.email, values.password, (err) => {
+            setLoading(false)
+            if (err) {
+                Alert.alert("Error Inicio Sesión", "Usuario o Constraseña incorrectos",
+                    [
+                        { text: "Ok", onPress: () => { } }
+                    ]
+                )
+            }
+        }))
 
     }
 
@@ -63,7 +72,6 @@ export default function Login(props: LoginProps) {
                                     value={values.password}
                                     onChangeText={handleChange('password')}
                                     placeholder="Password"
-                                    keyboardType="visible-password"
                                     secureTextEntry={true}
                                     placeholderTextColor={TikTokGrey} />
                                 <View style={[styles.infoTextContainer, styles.forgotPasswordContainer]} >
@@ -73,6 +81,7 @@ export default function Login(props: LoginProps) {
                             </View>
                             <View>
                                 <TikTokButton
+                                    loading={loading}
                                     onPress={handleSubmit}
                                     style={{ width: '100%' }}>
                                     Iniciar Sesión

@@ -1,2 +1,2 @@
 
-export const API = "http://10.0.0.209:3000"
+export const API =  __DEV__? "http://165.227.68.11:3000" : "http://165.227.68.11:3000"

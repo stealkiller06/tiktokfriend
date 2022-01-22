@@ -35,13 +35,12 @@ export async function getUsersByLocation(latitude:number,longitude:number, gende
     return data;
 }
 
-export async function likeUser(userId:string, type:string,token:string){
+export async function claimLoginReward(token:string){
 
-    const {data} = await axiosInstance.get<User[]>(`/like/${userId}/${type}`,
+    const {data} = await axiosInstance.get<User>("/users/claimLoginReward",
     {
         headers:{
             Authorization:`Bearer ${token}`,
-            "Content-Type":'multipart/form-data'
         }
     }
     )

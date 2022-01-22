@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import TikTokAvatar from "../../../components/TikTokAvatar";
 import TikTokIconButton from "../../../components/TikTokIconButton";
@@ -35,13 +35,15 @@ export default function HomeHeader(props: HomeHeaderProps) {
           <AntDesign name="exclamationcircle" size={18} color={TikTokRed} style={styles.missingIcon} />
         )}
       </View>
-      <View style={styles.userCoinsContainer}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Reward')}
+        style={styles.userCoinsContainer}>
         <TikTokText style={styles.userCoinText}>{totalPoints}</TikTokText>
 
         <View style={styles.diamongContainer}>
           <TikTokIconButton name="diamond" color={TikTokWhite} />
         </View>
-      </View>
+      </TouchableOpacity>
 
       <TikTokIconButton
         onPress={() => navigation.navigate("Notifications")}

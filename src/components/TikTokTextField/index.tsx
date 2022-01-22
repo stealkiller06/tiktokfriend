@@ -17,6 +17,7 @@ export default function TikTokTextField(props: TikTokTextFieldProps) {
             <TextInput
                 style={[styles.input, !valid && error ? styles.errorInput : null, style]}
                 {...inputProps}
+          
             />
 
             {!!(error && !valid) && (
