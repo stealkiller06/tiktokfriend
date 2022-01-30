@@ -48,7 +48,7 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
   function renderProfile() {
     if (!profileList.length && !isFirstLoad) {
       return (
-        <>
+        <View style={{ flex: 1 }}>
           <Animated.View
             entering={FadeIn.duration(1500)}
             style={styles.noMoreContainer}>
@@ -60,7 +60,7 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
 
           <TikTokDonationButton style={{ marginTop: 80 }} />
 
-        </>
+        </View>
       )
     }
 
