@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { ActivityIndicator, Alert, SafeAreaView, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import TikTokSafeAreaView from "../../components/TikTokSafeAreaView";
 import TikTokView from "../../components/TikTokViewPage";
@@ -15,7 +15,6 @@ import { API } from "../../../config";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Animated, { FadeIn } from "react-native-reanimated";
 import TikTokDonationButton from "../../components/TikToKDonationButton";
-interface HomeProps { }
 
 export default function Home({ navigation }: NativeStackScreenProps<RootStackParamList>) {
   const { loadingLocation, profileList, location } = useAppSelector(state => state.matchUser)
@@ -68,7 +67,7 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
 
 
     return (
-      <View style={{ position: 'relative', flex: 1 }}>
+      <View style={styles.profileContainer}>
         {profileList.map((userProfile, index) => <HomeUserProfile index={index} key={userProfile._id} user={userProfile} />)}
       </View>
     )
@@ -137,18 +136,16 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
 
 
   return (
-    <TikTokView>
-      <TikTokSafeAreaView>
-        <HomeHeader />
-        {loadingLocation ?
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" />
-          </View>
-          :
-          renderProfile()
-        }
-      </TikTokSafeAreaView>
-    </TikTokView>
+    <TikTokSafeAreaView style={{ paddingTop: 0 }}>
+      <HomeHeader />
+      {loadingLocation ?
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+        :
+        renderProfile()
+      }
+    </TikTokSafeAreaView>
 
   );
 }

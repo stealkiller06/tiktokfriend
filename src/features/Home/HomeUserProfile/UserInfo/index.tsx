@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { User } from "../../../../api/auth/types/auth";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import TikTokAvatar from "../../../../components/TikTokAvatar";
 import TikTokIconButton from "../../../../components/TikTokIconButton";
 import TikTokText from "../../../../components/TiktokText";
@@ -21,7 +20,7 @@ export default function UserInfo(props: UserInfoProps) {
 
   return (
     <Animated.View
-      exiting={SlideOutRight}
+      exiting={SlideOutRight.duration(300)}
       style={{ flex: 1 }}>
       <Image
         style={styles.userInfoImage}

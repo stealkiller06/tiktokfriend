@@ -5,11 +5,12 @@ import { useAppSelector } from '../../app/hooks'
 import TikTokIconButton from '../../components/TikTokIconButton'
 import TikTokText from '../../components/TiktokText'
 import TikTokView from '../../components/TikTokViewPage'
-import { TikTokGreyF5F5, TikTokPrimary } from '../../_core/colors'
+import { TikTokPrimary } from '../../_core/colors'
 import ProfilePhotoViewer from './ProfilePhotoViewer'
 import styles from './styles'
 import dayjs from 'dayjs'
 import TikTokDonationButton from '../../components/TikToKDonationButton'
+import TikTokSafeAreaView from '../../components/TikTokSafeAreaView'
 interface ProfileProps { }
 type profileScreenProps = NativeStackScreenProps<RootStackParamList>
 
@@ -35,7 +36,7 @@ export default function Profile({ navigation }: profileScreenProps) {
   }, [navigation]);
 
   return (
-    <TikTokView style={styles.ProfileContainer}>
+    <TikTokSafeAreaView style={styles.ProfileContainer}>
       <ProfilePhotoViewer />
 
       <View style={styles.profileNameContainer}>
@@ -62,6 +63,6 @@ export default function Profile({ navigation }: profileScreenProps) {
       </View>
 
       <TikTokDonationButton style={{ marginTop: 50 }} />
-    </TikTokView>
+    </TikTokSafeAreaView>
   )
 }

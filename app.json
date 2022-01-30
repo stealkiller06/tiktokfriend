@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 8,
+      "versionCode": 9,
       "package": "com.stealkiller06.tiktokamigo"
     },
     "web": {

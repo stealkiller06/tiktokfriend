@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { Match } from '../../api/match/types/like'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import TikTokSafeAreaView from '../../components/TikTokSafeAreaView'
 import { sendGetMatchListRequest } from '../Home/matchUserSlice'
 import NotificationItem from './NotificationItem'
 
@@ -26,13 +27,13 @@ export default function Notifications(props: NotificationsProps) {
     const keyExtractor = (item: Match) => item._id;
 
     return (
-        <View style={{ flex: 1 }}>
+        <TikTokSafeAreaView>
             <FlatList
                 data={matches}
                 renderItem={renderItem}
                 keyExtractor={keyExtractor}
             />
 
-        </View>
+        </TikTokSafeAreaView>
     )
 }

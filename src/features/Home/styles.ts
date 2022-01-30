@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-
 export default StyleSheet.create({
     loadingContainer: {
         justifyContent: 'center',
@@ -13,5 +12,9 @@ export default StyleSheet.create({
     },
     noMoreText: {
         marginBottom: 20
+    },
+    profileContainer:{
+        position: 'relative', 
+        flex: 1 ,
     }
 })

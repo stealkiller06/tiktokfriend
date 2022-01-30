@@ -15,7 +15,7 @@ export default function HomeUserProfile({ user, index }: HomeUserProfileProps) {
 
   return (
     <Animated.View
-      layout={Layout.springify().duration(300)}
+      layout={Layout.springify().duration(200)}
       style={[styles.homeUserProfile, { marginTop: index == 0 ? 10 : 40 }]}>
       <UserInfo user={user} />
       <UserActions user={user} />
