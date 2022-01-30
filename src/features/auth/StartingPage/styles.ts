@@ -9,11 +9,13 @@ export default StyleSheet.create({
     logoTextStyle:{
         fontSize:30,
         textAlign:'center',
-        fontWeight:"bold"
+        fontWeight:"bold",
+       
     },
     buttonContainer:{
         alignItems:'center',
-        marginBottom:20
+        
+        marginBottom:40
     },
     buttonMargin:{
         margin:5

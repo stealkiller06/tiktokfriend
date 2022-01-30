@@ -1,17 +1,24 @@
 import React from "react";
 import { View } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
+import { User } from "../../../api/auth/types/auth";
 import styles from "./styles";
 import UserActions from "./UserActions";
 import UserInfo from "./UserInfo";
 
-interface HomeUserProfileProps { }
+interface HomeUserProfileProps {
+  user: User,
+  index: number
+}
 
-export default function HomeUserProfile(props: HomeUserProfileProps) {
+export default function HomeUserProfile({ user, index }: HomeUserProfileProps) {
 
   return (
-    <View style={styles.homeUserProfile}>
-      <UserInfo />
-      <UserActions />
-    </View>
+    <Animated.View
+      layout={Layout.springify().duration(300)}
+      style={[styles.homeUserProfile, { marginTop: index == 0 ? 10 : 40 }]}>
+      <UserInfo user={user} />
+      <UserActions user={user} />
+    </Animated.View>
   );
 }

@@ -1,33 +1,28 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Image } from "react-native";
+import { User } from "../../../../api/auth/types/auth";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import TikTokAvatar from "../../../../components/TikTokAvatar";
 import TikTokIconButton from "../../../../components/TikTokIconButton";
 import TikTokText from "../../../../components/TiktokText";
 import { TikTokWhite } from "../../../../_core/colors";
-import { sendGetProfileListRequest } from "../../matchUserSlice";
+import Animated, { SlideOutRight, ZoomOutRight } from 'react-native-reanimated'
 import styles from "./styles";
 
 
-interface UserInfoProps { }
+interface UserInfoProps {
+  user: User
+}
 
 export default function UserInfo(props: UserInfoProps) {
-
-  const dispatch = useAppDispatch();
-  const { profileList, location } = useAppSelector(state => state.matchUser)
-
-
-  useEffect(() => {
-    if (location) {
-      dispatch(sendGetProfileListRequest(location.latitude, location.longitude))
-    }
-  }, [location])
-  if (!profileList.length) return <View><TikTokText>There is not more tiktokers</TikTokText></View>
-  const currentProfile = profileList[0];
+  const { user } = props;
+  const currentProfile = user
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <Animated.View
+      exiting={SlideOutRight}
+      style={{ flex: 1 }}>
       <Image
         style={styles.userInfoImage}
         source={{
@@ -60,6 +55,6 @@ export default function UserInfo(props: UserInfoProps) {
           República Dominicana
         </TikTokText>
       </View>
-    </View>
+    </Animated.View>
   );
 }

@@ -7,7 +7,7 @@ export default StyleSheet.create({
         flexDirection:'row',
         padding:10,
         borderBottomWidth:1,
-        borderColor:TikTokLightGrey
+        borderColor:TikTokLightGrey,        
     },
     notificationInfoContainer:{
         marginLeft:20
@@ -17,7 +17,9 @@ export default StyleSheet.create({
         fontSize:20
     },
     notificationUserMessage:{
-        marginTop:10
+        marginTop:10,
+      
+        paddingRight:20
     },
     notificationTime:{
         color:TikTokGrey,
@@ -28,9 +30,9 @@ export default StyleSheet.create({
         flexDirection:'row',
     },
     notificationButtonStyle:{
-        flex:1,
         margin:5,
-        height:50
+        height:50,
+        width:120
     }
 
 })

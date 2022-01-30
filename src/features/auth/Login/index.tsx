@@ -9,7 +9,6 @@ import styles from './styles'
 import { Formik } from 'formik';
 import { loginFormSchema, loginFormValues } from './loginFormI'
 import { sendLoginRequest } from '../authSlice'
-import { useDispatch } from 'react-redux'
 import { useAppDispatch } from '../../../app/hooks'
 
 interface LoginProps { }

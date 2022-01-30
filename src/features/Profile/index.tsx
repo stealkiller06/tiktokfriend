@@ -9,6 +9,7 @@ import { TikTokGreyF5F5, TikTokPrimary } from '../../_core/colors'
 import ProfilePhotoViewer from './ProfilePhotoViewer'
 import styles from './styles'
 import dayjs from 'dayjs'
+import TikTokDonationButton from '../../components/TikToKDonationButton'
 interface ProfileProps { }
 type profileScreenProps = NativeStackScreenProps<RootStackParamList>
 
@@ -59,6 +60,8 @@ export default function Profile({ navigation }: profileScreenProps) {
       <View style={styles.bio}>
         <TikTokText>{user?.bio}</TikTokText>
       </View>
+
+      <TikTokDonationButton style={{ marginTop: 50 }} />
     </TikTokView>
   )
 }

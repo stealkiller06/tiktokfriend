@@ -1,23 +1,51 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
-  NativeStackHeaderProps,
+ 
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import React from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View,  SafeAreaView, Dimensions } from "react-native";
 import TikTokButton from "../../../components/TikTokButton";
-import TikTokText from "../../../components/TiktokText";
 import styles from "./styles";
+import Animated, { 
+  useSharedValue,
+  BounceInDown,
+  BounceInUp
+} from 'react-native-reanimated';
+
+
+const HEIGHT = Dimensions.get('window').height;
+
 
 export default function StartingPage({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) {
+
+  const top = useSharedValue(0);
+  const opacity = useSharedValue(0)
+  const viewRef = useRef<View>(null)
+  const [ showTitle, setShowTitle] = useState(false)
+
+
+  useEffect(()=>{
+
+
+    setShowTitle(true)
+  },[])
+
   return (
-    <SafeAreaView style={styles.startingPageContainer}>
-      <View style={{ marginTop: 50 }}></View>
-      <TikTokText style={styles.logoTextStyle}>TikTok Amigo</TikTokText>
-      <View style={styles.buttonContainer}>
+    <View style={styles.startingPageContainer}>
+      <View style={{marginTop:20}}></View>
+
+      {showTitle&&(
+           <Animated.Text
+           entering={BounceInUp.duration(1500)}
+           style={styles.logoTextStyle}>TikTok Amigo</Animated.Text>
+     
+      )}
+   
+      <View ref={viewRef} style={styles.buttonContainer}>
         <TikTokButton
-          onPress={() => navigation.navigate("SignUp")}
+          onPress={() => {opacity.value = 0; top.value=0;  navigation.navigate("SignUp")}}
           style={styles.buttonMargin}
         >
           Registrarte
@@ -28,6 +56,6 @@ export default function StartingPage({
           Iniciar Sesión
         </TikTokButton>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

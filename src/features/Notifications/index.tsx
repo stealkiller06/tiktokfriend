@@ -12,7 +12,6 @@ export default function Notifications(props: NotificationsProps) {
     const dispatch = useAppDispatch()
     const { matches } = useAppSelector(state => state.matchUser)
 
-    console.log(matches)
 
     useEffect(() => {
         dispatch(sendGetMatchListRequest())
@@ -27,7 +26,7 @@ export default function Notifications(props: NotificationsProps) {
     const keyExtractor = (item: Match) => item._id;
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <FlatList
                 data={matches}
                 renderItem={renderItem}

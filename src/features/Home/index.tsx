@@ -13,6 +13,8 @@ import TikTokButton from "../../components/TikTokButton";
 import { io } from 'socket.io-client';
 import { API } from "../../../config";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import Animated, { FadeIn } from "react-native-reanimated";
+import TikTokDonationButton from "../../components/TikToKDonationButton";
 interface HomeProps { }
 
 export default function Home({ navigation }: NativeStackScreenProps<RootStackParamList>) {
@@ -35,9 +37,52 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
     return location;
   }
 
+
+  function searchForMore() {
+    dispatch(setLoadingLocation(true))
+    dispatch(sendGetProfileListRequest(location?.latitude || 0,
+      location?.longitude || 0
+      ,
+      userToken || ""))
+    dispatch(setLoadingLocation(false))
+  }
+  function renderProfile() {
+    if (!profileList.length && !isFirstLoad) {
+      return (
+        <>
+          <Animated.View
+            entering={FadeIn.duration(1500)}
+            style={styles.noMoreContainer}>
+            <TikTokText style={styles.noMoreText}>No hay más tiktokers por tu zona</TikTokText>
+            <TikTokButton onPress={() => searchForMore()}>Buscar más</TikTokButton>
+
+
+          </Animated.View>
+
+          <TikTokDonationButton style={{ marginTop: 80 }} />
+
+        </>
+      )
+    }
+
+
+
+    return (
+      <View style={{ position: 'relative', flex: 1 }}>
+        {profileList.map((userProfile, index) => <HomeUserProfile index={index} key={userProfile._id} user={userProfile} />)}
+      </View>
+    )
+  }
+
   useEffect(() => {
     getLocation();
   }, [])
+
+  useEffect(() => {
+    if (location) {
+      searchForMore()
+    }
+  }, [location])
 
 
   useEffect(() => {
@@ -88,26 +133,7 @@ export default function Home({ navigation }: NativeStackScreenProps<RootStackPar
   }, [user])
 
 
-  function searchForMore() {
-    dispatch(setLoadingLocation(true))
-    dispatch(sendGetProfileListRequest(location?.latitude || 0,
-      location?.longitude || 0
-      ,
-      userToken || ""))
-    dispatch(setLoadingLocation(false))
-  }
-  function renderProfile() {
-    if (!profileList.length && !isFirstLoad) {
-      return (
-        <View style={styles.noMoreContainer}>
-          <TikTokText style={styles.noMoreText}>No hay más tiktokers por tu zona</TikTokText>
-          <TikTokButton onPress={() => searchForMore()}>Buscar más</TikTokButton>
-        </View>
-      )
-    }
 
-    return <HomeUserProfile />
-  }
 
 
   return (

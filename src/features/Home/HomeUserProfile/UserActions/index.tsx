@@ -1,23 +1,26 @@
 import React from "react";
 import { View, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
+import { User } from "../../../../api/auth/types/auth";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import TikTokIconButton from "../../../../components/TikTokIconButton";
 import { TikTokWhite } from "../../../../_core/colors";
 import { sendLikeRequest } from "../../matchUserSlice";
 import styles from "./styles";
 
-interface UserActionsProps { }
+interface UserActionsProps { 
+  user:User
+}
 
-export default function UserActions(props: UserActionsProps) {
+export default function UserActions({user}: UserActionsProps) {
   const dispatch = useAppDispatch();
-  const { profileList, totalPoints } = useAppSelector(state => state.matchUser);
-  const user = useAppSelector(state => state.auth.user);
-  const currentUser = profileList[0];
+  const {  totalPoints } = useAppSelector(state => state.matchUser);
+  const userAuth = useAppSelector(state => state.auth.user);
+  const currentUser = user;
 
 
   function action(type: 'like' | 'dislike') {
-    const images = user?.images ? user.images[0] : null;
+    const images = userAuth?.images ? userAuth.images[0] : null;
     if (!images) {
       Alert.alert("Mensaje de error", "Debes agregar tu foto de perfil para poder hacer esta acción",
         [{ text: 'Ok' }]
