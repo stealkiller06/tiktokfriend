@@ -119,7 +119,7 @@ export const sendLikeRequest = (userId: string, type: string) => async (dispatch
   try {
     dispatch(setLoading(true))
     const userToken = await SecureStore.getItemAsync('userToken');
-      // const userLiked = await likeUser(userId, type, userToken || "")
+      const userLiked = await likeUser(userId, type, userToken || "")
 
     if(type === "like"){
       dispatch(setPoints({value:10, type:'remove'}))
